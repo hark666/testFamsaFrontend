@@ -1,0 +1,63 @@
+<h4>Numero de pendientes: {{activities.length}}</h4>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Pendiente</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let activity of activities">
+            <td>{{ activity.activityDescription }}</td>
+            <td><button class="btn btn-lg btn-outline-danger" (click)="borrarPendiente( activity )">borrar</button></td>
+            <td><button class="btn btn-lg btn-outline-success" (click)="actualizarPendiente( activity, contentUpdate )">update</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #contentAdd let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Crear Pendiente</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <form [formGroup]="addActivity">
+            <div class="form-group">
+                <label for="description">Descripcion</label>
+                <div class="input-group">
+                    <input id="description" class="form-control" placeholder="Hacer algo" name="description" formControlName="description" required>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')"  *ngIf="addActivity.controls['description'].value">Guardar</button>
+    </div>
+</ng-template>
+
+<ng-template #contentUpdate let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Actualizar Pendiente</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+                <form [formGroup]="updateActivity">
+                <div class="form-group">
+                    <label for="description">Descripcion</label>
+                    <div class="input-group">
+                        <input id="description" class="form-control" placeholder="Hacer algo" name="description" formControlName="description" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('update click')"  *ngIf="updateActivity.controls['description'].value">Actualizar</button>
+        </div>
+    </ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="abrirModalCrearPendiente( contentAdd )">Crear pendiente</button>
